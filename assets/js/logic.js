@@ -115,8 +115,14 @@ choicesDiv.addEventListener("click", function(event) {
             secondsRemaining -= 10;
             lastAnswerStatus = "Wrong!";
         }
-        currentQuestionIndex += 1;
-        showNextQuestion();
+
+        // handle user answering all the questions
+        if (currentQuestionIndex === questions.length - 1) {
+            secondsRemaining = 0;
+        } else {
+            currentQuestionIndex += 1;
+            showNextQuestion();
+        }
         displayAnswerStatus();
     }
 })
