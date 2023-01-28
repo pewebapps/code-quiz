@@ -81,7 +81,7 @@ choicesDiv.addEventListener("click", function(event) {
         if (state === correctAnswerIndex) {
             currentScore += 1;
         } else {
-            
+            secondsRemaining -= 10;
         }
     }
 })
