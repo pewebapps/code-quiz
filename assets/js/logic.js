@@ -2,6 +2,20 @@ const MAX_TIME = 60;
 
 let secondsRemaining = 0;
 
+const addQuestionButtons = () => {
+    const choiceDiv = document.getElementById("choices");
+    const totalChoices = questions[0].answers.length
+    for (let i = 0; i < totalChoices; i++) {
+        const button = document.createElement("button");
+        button.id = `answer-${i}`;
+        choiceDiv.append(button);
+        console.log("Append: ", i);
+    }
+}
+
+// add question buttons at the start
+addQuestionButtons();
+
 // event listener for start button
 const startButton = document.getElementById("start");
 startButton.addEventListener("click", function() {

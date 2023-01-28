@@ -105,7 +105,7 @@ const questions =
             answers: [
                 "\\",
                 "//",
-                `\\`
+                `\\`,
                 `\**/`
             ],
             correctAnswerIndex: 1
