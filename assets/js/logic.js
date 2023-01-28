@@ -74,6 +74,10 @@ const startCountdownTimer = () => {
         secondsRemaining--;
         setCountdownTimer();
 
+        if (secondsRemaining <= 0) {
+            clearInterval(timer);
+            endGame();
+        }
     }, 1000)
 }
 
@@ -116,3 +120,11 @@ choicesDiv.addEventListener("click", function(event) {
         displayAnswerStatus();
     }
 })
+
+const endGame = () => {
+    // get questions id and hide
+    document.getElementById("questions").classList.add("hide");
+
+    // show end screen
+    document.getElementById("end-screen").classList.remove("hide");
+}
