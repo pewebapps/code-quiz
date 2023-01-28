@@ -3,6 +3,7 @@ const MAX_TIME = 60;
 let secondsRemaining = 0;
 let currentQuestionIndex = 0;
 let currentScore = 0;
+let lastAnswerStatus = "";
 
 const addQuestionButtons = () => {
     const choiceDiv = document.getElementById("choices");
@@ -17,8 +18,27 @@ const addQuestionButtons = () => {
     }
 }
 
+// create last answer status section
+const addLastAnswerSection = () => {
+    const lastAnswerDiv = document.createElement("div");
+    lastAnswerDiv.classList.add("hide");
+    lastAnswerDiv.id = "last-answer";
+   
+    const divider = document.createElement("div");
+    divider.setAttribute("style", "border: 1px solid black; margin-top: 20px;");
+    
+    const answerLabel = document.createElement("p");
+    answerLabel.setAttribute("style", "color: grey; font-size: 20px;");
+
+    const questionsDiv = document.getElementById("questions");
+    questionsDiv.append(lastAnswerDiv);
+    lastAnswerDiv.append(divider);
+    lastAnswerDiv.append(answerLabel);
+}
+
 // add question buttons at the start
 addQuestionButtons();
+addLastAnswerSection();
 
 // event listener for start button
 const startButton = document.getElementById("start");
@@ -68,6 +88,12 @@ const showNextQuestion = () => {
     }
 }
 
+const displayAnswerStatus = () => {
+    const lastAnswerDiv = document.getElementById("last-answer");
+    lastAnswerDiv.classList.remove("hide");
+    lastAnswerDiv.children[1].textContent = lastAnswerStatus;
+}
+
 const choicesDiv = document.getElementById("choices");
 choicesDiv.addEventListener("click", function(event) {
     const element = event.target;
@@ -80,10 +106,13 @@ choicesDiv.addEventListener("click", function(event) {
         // correct answer
         if (state === correctAnswerIndex) {
             currentScore += 1;
+            lastAnswerStatus = "Correct!";
         } else {
             secondsRemaining -= 10;
+            lastAnswerStatus = "Wrong!";
         }
         currentQuestionIndex += 1;
         showNextQuestion();
+        displayAnswerStatus();
     }
 })
