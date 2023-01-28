@@ -121,3 +121,26 @@ const endGame = () => {
     // show high score
     document.getElementById("final-score").textContent = `${currentScore}`;
 }
+
+const submitButton = document.getElementById("submit");
+submitButton.addEventListener("click", function () {
+    // fetch high scores
+    let highScores = JSON.parse(localStorage.getItem("high-scores"));
+
+     // create score
+     const initials = document.getElementById("initials").value;
+    const score = {
+        score: currentScore,
+        initials: initials
+    }
+
+    if (highScores === null) {
+        const newHighScores = [score]
+        localStorage.setItem("high-scores", JSON.stringify(newHighScores));
+    } else {
+        highScores.push(score);
+        localStorage.setItem("high-scores", JSON.stringify(highScores));
+    }
+
+    
+})
