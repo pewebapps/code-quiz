@@ -83,5 +83,7 @@ choicesDiv.addEventListener("click", function(event) {
         } else {
             secondsRemaining -= 10;
         }
+        currentQuestionIndex += 1;
+        showNextQuestion();
     }
 })
