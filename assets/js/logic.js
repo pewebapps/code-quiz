@@ -96,10 +96,7 @@ choicesDiv.addEventListener("click", function(event) {
             currentScore += 1;
             answerFeedback = "Correct!";
         } else {
-            secondsRemaining -= 10;
-            if (secondsRemaining < 0) {
-                secondsRemaining = 0;
-            }
+            secondsRemaining = Math.max(secondsRemaining -= 10, 0);
             answerFeedback = "Wrong!";
         }
 
