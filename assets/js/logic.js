@@ -1,6 +1,8 @@
 const MAX_TIME = 60;
 
 let secondsRemaining = 0;
+let currentQuestionIndex = 0;
+let currentScore = 0;
 
 const addQuestionButtons = () => {
     const choiceDiv = document.getElementById("choices");
@@ -35,7 +37,7 @@ startButton.addEventListener("click", function() {
     startCountdownTimer()
 
     // show first question
-    showFirstQuestion();
+    showNextQuestion();
 })
 
 const resetTimer = () => {
@@ -55,14 +57,14 @@ const startCountdownTimer = () => {
     }, 1000)
 }
 
-const showFirstQuestion = () => {
-    const firstQuestion = questions[0];
+const showNextQuestion = () => {
+    const nextQuestion = questions[currentQuestionIndex];
     const questionTitle = document.getElementById("question-title");
-    questionTitle.textContent = firstQuestion.question;
-    const totalChoices = questions[0].answers.length
+    questionTitle.textContent = nextQuestion.question;
+    const totalChoices = questions[currentQuestionIndex].answers.length
     for (let i = 0; i < totalChoices; i++) {
         const button = document.getElementById(`answer-${i}`);
-        button.innerHTML = firstQuestion.answers[i];
+        button.innerHTML = nextQuestion.answers[i];
     }
 }
 
@@ -70,7 +72,16 @@ const choicesDiv = document.getElementById("choices");
 choicesDiv.addEventListener("click", function(event) {
     const element = event.target;
     if (element.matches(".answer-button")) {
-        const state = element.getAttribute("data-state");
-        console.log(state);
+    
+        // turn data into int for comparison
+        const state = parseInt(element.getAttribute("data-state"));
+        const correctAnswerIndex = questions[currentQuestionIndex].correctAnswerIndex
+        
+        // correct answer
+        if (state === correctAnswerIndex) {
+            currentScore += 1;
+        } else {
+            
+        }
     }
 })
