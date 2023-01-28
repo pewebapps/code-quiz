@@ -65,3 +65,12 @@ const showFirstQuestion = () => {
         button.innerHTML = firstQuestion.answers[i];
     }
 }
+
+const choicesDiv = document.getElementById("choices");
+choicesDiv.addEventListener("click", function(event) {
+    const element = event.target;
+    if (element.matches(".answer-button")) {
+        const state = element.getAttribute("data-state");
+        console.log(state);
+    }
+})
