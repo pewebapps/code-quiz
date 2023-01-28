@@ -8,6 +8,8 @@ const addQuestionButtons = () => {
     for (let i = 0; i < totalChoices; i++) {
         const button = document.createElement("button");
         button.id = `answer-${i}`;
+        button.setAttribute("data-state", `${i}`);
+        button.classList.add("answer-button");
         choiceDiv.append(button);
         console.log("Append: ", i);
     }
