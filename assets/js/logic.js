@@ -3,7 +3,7 @@ const MAX_TIME = 60;
 let secondsRemaining = 0;
 let currentQuestionIndex = 0;
 let currentScore = 0;
-let lastAnswerStatus = "";
+let answerFeedback = "";
 
 const addQuestionButtons = () => {
     const choiceDiv = document.getElementById("choices");
@@ -18,27 +18,8 @@ const addQuestionButtons = () => {
     }
 }
 
-// create last answer status section
-const addLastAnswerSection = () => {
-    const lastAnswerDiv = document.createElement("div");
-    lastAnswerDiv.classList.add("hide");
-    lastAnswerDiv.id = "last-answer";
-   
-    const divider = document.createElement("div");
-    divider.setAttribute("style", "border: 1px solid black; margin-top: 20px;");
-    
-    const answerLabel = document.createElement("p");
-    answerLabel.setAttribute("style", "color: grey; font-size: 20px;");
-
-    const questionsDiv = document.getElementById("questions");
-    questionsDiv.append(lastAnswerDiv);
-    lastAnswerDiv.append(divider);
-    lastAnswerDiv.append(answerLabel);
-}
-
 // add question buttons at the start
 addQuestionButtons();
-addLastAnswerSection();
 
 // event listener for start button
 const startButton = document.getElementById("start");
@@ -71,7 +52,10 @@ const setCountdownTimer = () => {
 
 const startCountdownTimer = () => {
     const timer = setInterval(function() {
-        secondsRemaining--;
+        if (secondsRemaining > 0) {
+            secondsRemaining--;
+        }
+        
         setCountdownTimer();
 
         if (secondsRemaining <= 0) {
@@ -92,10 +76,10 @@ const showNextQuestion = () => {
     }
 }
 
-const displayAnswerStatus = () => {
-    const lastAnswerDiv = document.getElementById("last-answer");
-    lastAnswerDiv.classList.remove("hide");
-    lastAnswerDiv.children[1].textContent = lastAnswerStatus;
+const displayFeedbackStatus = () => {
+    const feedbackDiv = document.getElementById("feedback");
+    feedbackDiv.classList.remove("hide");
+    feedbackDiv.textContent = answerFeedback;
 }
 
 const choicesDiv = document.getElementById("choices");
@@ -110,10 +94,13 @@ choicesDiv.addEventListener("click", function(event) {
         // correct answer
         if (state === correctAnswerIndex) {
             currentScore += 1;
-            lastAnswerStatus = "Correct!";
+            answerFeedback = "Correct!";
         } else {
             secondsRemaining -= 10;
-            lastAnswerStatus = "Wrong!";
+            if (secondsRemaining < 0) {
+                secondsRemaining = 0;
+            }
+            answerFeedback = "Wrong!";
         }
 
         // handle user answering all the questions
@@ -123,7 +110,7 @@ choicesDiv.addEventListener("click", function(event) {
             currentQuestionIndex += 1;
             showNextQuestion();
         }
-        displayAnswerStatus();
+        displayFeedbackStatus();
     }
 })
 
@@ -133,4 +120,7 @@ const endGame = () => {
 
     // show end screen
     document.getElementById("end-screen").classList.remove("hide");
+
+    // show high score
+    document.getElementById("final-score").textContent = `${currentScore}`;
 }
