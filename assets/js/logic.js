@@ -31,6 +31,9 @@ startButton.addEventListener("click", function() {
 
     // start count down timer
     startCountdownTimer()
+
+    // show first question
+    showFirstQuestion();
 })
 
 const resetTimer = () => {
@@ -48,4 +51,15 @@ const startCountdownTimer = () => {
         setCountdownTimer();
 
     }, 1000)
+}
+
+const showFirstQuestion = () => {
+    const firstQuestion = questions[0];
+    const questionTitle = document.getElementById("question-title");
+    questionTitle.textContent = firstQuestion.question;
+    const totalChoices = questions[0].answers.length
+    for (let i = 0; i < totalChoices; i++) {
+        const button = document.getElementById(`answer-${i}`);
+        button.innerHTML = firstQuestion.answers[i];
+    }
 }
